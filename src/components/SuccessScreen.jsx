@@ -17,7 +17,7 @@ export default function SuccessScreen({ onReset }) {
                     Ты — самое прекрасное в моей жизни!
                 </p>
                 <p style={{ fontSize: "18px", fontWeight: "600", color: "var(--accent)" }}>
-                    С Днем рождения! ❤️
+                    С Днем рождения!
                 </p>
                 <button onClick={onReset}>
                     Начать заново
