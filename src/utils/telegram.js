@@ -1,41 +1,28 @@
 import { loadTelegramConfig } from "./storage";
 
-// Отправка уведомления в Telegram
+// Запрос к серверному API
+async function apiRequest(action, data) {
+    const response = await fetch("/api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, data }),
+    });
+    return response.json();
+}
+
+// Получить настройки Telegram с сервера
+export async function getServerTelegramConfig() {
+    return await apiRequest("getTelegramConfig", null);
+}
+
+// Сохранить настройки Telegram на сервере
+export async function saveServerTelegramConfig(config) {
+    return await apiRequest("setTelegramConfig", config);
+}
+
+// Отправить уведомление в Telegram через сервер
 export async function sendTelegramNotification(message) {
-    const config = loadTelegramConfig();
-    
-    if (!config || !config.botToken || !config.chatId) {
-        console.warn("Telegram не настроен");
-        return { success: false, error: "Не настроен" };
-    }
-
-    try {
-        const response = await fetch(
-            `https://api.telegram.org/bot${config.botToken}/sendMessage`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    chat_id: config.chatId,
-                    text: message,
-                    parse_mode: "HTML",
-                }),
-            }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.description || "Ошибка отправки");
-        }
-
-        return { success: true, data };
-    } catch (error) {
-        console.error("Ошибка отправки в Telegram:", error);
-        return { success: false, error: error.message };
-    }
+    return await apiRequest("sendNotification", { message });
 }
 
 // Формирование сообщения для уведомления

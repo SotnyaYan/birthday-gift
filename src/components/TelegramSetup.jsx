@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "../App.css";
 
-import { saveTelegramConfig } from "../utils/storage";
+import { saveServerTelegramConfig, getServerTelegramConfig } from "../utils/telegram";
 
 export default function TelegramSetup({ onComplete }) {
     const [botToken, setBotToken] = useState("");
     const [chatId, setChatId] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [checking, setChecking] = useState(true);
+
+    // Проверка настроек при загрузке
+    useEffect(() => {
+        checkExistingConfig();
+    }, []);
+
+    const checkExistingConfig = async () => {
+        try {
+            const result = await getServerTelegramConfig();
+            
+            if (result.config && result.config.botToken && result.config.chatId) {
+                // Настройки уже есть — сразу переходим к приложению
+                onComplete(true);
+                return;
+            }
+        } catch (err) {
+            console.error("Ошибка проверки настроек:", err);
+        } finally {
+            setChecking(false);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,9 +44,15 @@ export default function TelegramSetup({ onComplete }) {
         setLoading(true);
 
         try {
-            saveTelegramConfig({ botToken, chatId });
+            // Сохраняем на сервере
+            const result = await saveServerTelegramConfig({ botToken, chatId });
             
-            const response = await fetch(
+            if (!result.success) {
+                throw new Error("Ошибка сохранения");
+            }
+            
+            // Тестируем отправку
+            const testResult = await fetch(
                 `https://api.telegram.org/bot${botToken}/sendMessage`,
                 {
                     method: "POST",
@@ -39,18 +67,35 @@ export default function TelegramSetup({ onComplete }) {
                 }
             );
 
-            const data = await response.json();
+            const data = await testResult.json();
 
-            if (!response.ok) {
+            if (!testResult.ok) {
                 throw new Error(data.description || "Ошибка тестового сообщения");
             }
 
+            // Успешно!
             onComplete(true);
         } catch (err) {
             setError(`Ошибка: ${err.message}`);
             setLoading(false);
         }
     };
+
+    if (checking) {
+        return (
+            <div className="screen telegram-setup">
+                <div className="glass">
+                    <div className="waiting-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h2>Проверка настроек...</h2>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="screen telegram-setup">

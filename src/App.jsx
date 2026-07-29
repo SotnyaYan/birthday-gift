@@ -14,7 +14,6 @@ import TelegramSetup from "./components/TelegramSetup";
 
 import useProgress from "./hooks/useProgress";
 import { sendTelegramNotification, formatGiftNotification, formatWelcomeNotification, formatFinalNotification } from "./utils/telegram";
-import { loadTelegramConfig } from "./utils/storage";
 
 import { gifts } from "./data/gifts";
 
@@ -36,28 +35,15 @@ function App() {
     const [telegramConfigured, setTelegramConfigured] = useState(false);
     const [showTelegramSetup, setShowTelegramSetup] = useState(false);
 
-    // Проверка: все ли подарки открыты
-    const allGiftsOpened = progress.currentGift > gifts.length;
-
     // Проверка настроек Telegram при загрузке
     useEffect(() => {
-        const config = loadTelegramConfig();
-        if (config && config.botToken && config.chatId) {
-            setTelegramConfigured(true);
-            
-            // Отправляем уведомление о начале прохождения
-            if (!progress.started) {
-                sendTelegramNotification(formatWelcomeNotification());
-            }
-        } else if (!progress.started) {
-            setShowTelegramSetup(true);
-        }
+        // Проверка не нужна здесь - она делается в TelegramSetup
     }, []);
 
     // Отправка уведомления в Telegram при открытии подарка
     useEffect(() => {
         if (progress.opened && !progress.showToast) {
-            setToastMessage("Подарок открыт! Можно забрать! 🎁");
+            setToastMessage("Подарок открыт! Можно забрать!");
             setShowToast(true);
             
             // Отправляем в Telegram
