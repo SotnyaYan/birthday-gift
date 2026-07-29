@@ -376,6 +376,71 @@ button.submit-btn:not(:disabled) {
     color: #ff4757;
 }
 
+/* Экран ребуса */
+.riddle-image {
+    margin: 20px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.riddle-image img {
+    width: 100%;
+    display: block;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.input-wrapper input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.input-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.input-wrapper button {
+    margin-top: 0;
+    white-space: nowrap;
+    padding: 14px 24px;
+}
+
+.riddle-error {
+    margin-top: 15px;
+    padding: 12px 18px;
+    background: rgba(255, 71, 87, 0.2);
+    border: 2px solid #ff4757;
+    border-radius: 12px;
+    color: #ff4757;
+    font-weight: 600;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-5px); }
+}
+
 .result-message {
     margin-top: 20px;
     padding: 20px;

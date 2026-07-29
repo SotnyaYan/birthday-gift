@@ -120,7 +120,7 @@ function App() {
     const handleOpenGift = useCallback(() => {
         const gift = gifts.find(g => g.id === progress.currentGift);
         
-        if (gift && gift.riddle) {
+        if (gift && gift.riddleAnswer) {
             setCurrentGift(gift);
             setShowRiddle(true);
         } else {
@@ -187,10 +187,8 @@ function App() {
             <>
                 <ProgressIndicator progress={progress} total={gifts.length} />
                 <RiddleScreen
-                    riddle={currentGift.riddle}
-                    giftTitle={currentGift.title}
+                    gift={currentGift}
                     onAnswer={handleRiddleAnswer}
-                    onSkip={handleSkipRiddle}
                 />
             </>
         );

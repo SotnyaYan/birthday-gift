@@ -1,33 +1,29 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import "../App.css";
 
-export default function RiddleScreen({ riddle, giftTitle, onAnswer, onSkip }) {
-    const [selectedAnswer, setSelectedAnswer] = useState(null);
-    const [showResult, setShowResult] = useState(false);
+export default function RiddleScreen({ gift, onAnswer }) {
+    const [input, setInput] = useState("");
+    const [error, setError] = useState(false);
+    const inputRef = useRef(null);
 
-    const handleAnswer = (index) => {
-        setSelectedAnswer(index);
-    };
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
 
-    const handleSubmit = () => {
-        if (selectedAnswer === null) return;
+    const handleSubmit = (e) => {
+        e.preventDefault();
         
-        setShowResult(true);
+        const normalizedInput = input.trim().toLowerCase();
+        const normalizedAnswer = gift.riddleAnswer.toLowerCase();
         
-        if (selectedAnswer === riddle.correct) {
-            setTimeout(() => {
-                onAnswer(true);
-            }, 1500);
+        if (normalizedInput === normalizedAnswer) {
+            onAnswer(true);
         } else {
-            setTimeout(() => {
-                onAnswer(false);
-            }, 1500);
+            setError(true);
+            setInput("");
+            setTimeout(() => setError(false), 500);
         }
-    };
-
-    const handleSkip = () => {
-        onAnswer(true);
     };
 
     return (
@@ -40,52 +36,34 @@ export default function RiddleScreen({ riddle, giftTitle, onAnswer, onSkip }) {
                         <line x1="12" y1="17" x2="12.01" y2="17"></line>
                     </svg>
                 </div>
-                <h2>Ребус для {giftTitle}</h2>
-                
-                <p className="riddle-text">
-                    {riddle.text}
+                <h2>{gift.title}</h2>
+                <p style={{ marginBottom: "20px", fontSize: "15px" }}>
+                    Введи слово, чтобы открыть подарок:
                 </p>
 
-                <div className="riddle-options">
-                    {riddle.options.map((option, index) => (
-                        <button
-                            key={index}
-                            className={`option-btn ${selectedAnswer === index ? 'selected' : ''} ${showResult ? (index === riddle.correct ? 'correct' : 'wrong') : ''}`}
-                            onClick={() => !showResult && handleAnswer(index)}
-                            disabled={showResult}
-                        >
-                            {option}
-                        </button>
-                    ))}
+                <div className="riddle-image">
+                    <img src={gift.image} alt={gift.title} />
                 </div>
 
-                {showResult && (
-                    <div className={`result-message ${selectedAnswer === riddle.correct ? 'success' : 'error'}`}>
-                        {selectedAnswer === riddle.correct ? (
-                            <div>
-                                <p>Верно! Молодец!</p>
-                            </div>
-                        ) : (
-                            <div>
-                                <p>Правильный ответ: {riddle.options[riddle.correct]}</p>
-                            </div>
-                        )}
+                <form onSubmit={handleSubmit}>
+                    <div className={`input-wrapper ${error ? "shake" : ""}`}>
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="Введи слово..."
+                            autoComplete="off"
+                        />
+                        <button type="submit">Открыть</button>
+                    </div>
+                </form>
+
+                {error && (
+                    <div className="riddle-error">
+                        Неверно, попробуй ещё раз!
                     </div>
                 )}
-
-                {!showResult && (
-                    <button 
-                        className="submit-btn" 
-                        onClick={handleSubmit}
-                        disabled={selectedAnswer === null}
-                    >
-                        Ответить
-                    </button>
-                )}
-
-                <button className="skip-btn" onClick={handleSkip}>
-                    Пропустить (и открыть сразу)
-                </button>
             </div>
         </div>
     );
