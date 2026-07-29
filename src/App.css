@@ -294,6 +294,32 @@ button.submit-btn:not(:disabled) {
     animation: heartbeatBig 2s ease-in-out infinite;
 }
 
+.welcome-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.welcome-actions button {
+    margin-top: 0;
+}
+
+.welcome-actions button.secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: #dfe6e9;
+    font-size: 14px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.welcome-actions button.secondary svg {
+    flex-shrink: 0;
+}
+
 /* Ресурс */
 .riddle-text {
     font-size: 18px;

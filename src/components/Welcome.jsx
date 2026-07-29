@@ -1,6 +1,6 @@
 import "../App.css";
 
-export default function Welcome({ onStart }) {
+export default function Welcome({ onStart, onOpenTelegramSetup }) {
     return (
         <div className="screen welcome">
             <div className="glass">
@@ -17,9 +17,18 @@ export default function Welcome({ onStart }) {
                 <p style={{ color: "var(--accent)", fontWeight: "600" }}>
                     Каждый ждет своего времени 😉
                 </p>
-                <button onClick={onStart}>
-                    Начать путешествие
-                </button>
+                <div className="welcome-actions">
+                    <button onClick={onStart}>
+                        Начать путешествие
+                    </button>
+                    <button className="secondary" onClick={onOpenTelegramSetup}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                        </svg>
+                        Настроить уведомления
+                    </button>
+                </div>
             </div>
         </div>
     );
