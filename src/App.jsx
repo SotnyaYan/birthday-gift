@@ -40,6 +40,7 @@ function App() {
     const telegramConfiguredRef = useRef(telegramConfigured);
     const showToastRef = useRef(false);
     const notificationSentRef = useRef(false);
+    const sentGiftRef = useRef(null);
     const finalNotificationSentRef = useRef(false);
 
     // Обновляем refs
@@ -77,6 +78,12 @@ function App() {
 
     // Отправка уведомления при открытии подарка
     useEffect(() => {
+        // Сбрасываем флаг при смене подарка, чтобы отправлять новое уведомление
+        if (progress.opened && progress.currentGift && progress.currentGift !== sentGiftRef.current) {
+            notificationSentRef.current = false;
+            sentGiftRef.current = progress.currentGift;
+        }
+
         if (progress.opened && telegramConfiguredRef.current && !notificationSentRef.current) {
             setToastMessage("Подарок открыт! Можно забрать!");
             setShowToast(true);
