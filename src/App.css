@@ -485,6 +485,18 @@ button.submit-btn:not(:disabled) {
     display: block;
 }
 
+.riddle-hint {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(242, 177, 61, 0.15);
+    border: 1px solid rgba(242, 177, 61, 0.3);
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-light);
+    text-align: center;
+}
+
 .input-wrapper {
     display: flex;
     gap: 10px;

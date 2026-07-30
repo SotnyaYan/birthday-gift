@@ -45,6 +45,12 @@ export default function RiddleScreen({ gift, onAnswer }) {
                     <img src={gift.image} alt={gift.title} />
                 </div>
 
+                {gift.riddleDescription && (
+                    <div className="riddle-hint">
+                        💡 {gift.riddleDescription}
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit}>
                     <div className={`input-wrapper ${error ? "shake" : ""}`}>
                         <input
