@@ -145,10 +145,18 @@ function App() {
             if (!progress.started) {
                 sendTelegramNotification(formatWelcomeNotification());
             }
+        } else {
+            // Если пользователь пропустил настройку, всё равно начинаем
+            start();
         }
-        
-        start();
     }, [start, progress.started]);
+
+    // Экран настройки Telegram
+    if (showTelegramSetup) {
+        return (
+            <TelegramSetup onComplete={handleTelegramSetupComplete} />
+        );
+    }
 
     // Пользователь еще не начал
     if (!progress.started) {
