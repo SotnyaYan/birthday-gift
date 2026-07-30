@@ -2,7 +2,10 @@ import "../App.css";
 
 export default function ProgressIndicator({ progress, total }) {
     const current = progress.currentGift || 1;
+    const show = current <= total;
     
+    if (!show) return null;
+
     return (
         <div className="progress-container">
             <div className="progress-bar">
