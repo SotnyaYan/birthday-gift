@@ -4,6 +4,7 @@ export const gifts = [
         title: "Первый подарок",
         image: "/images/gift1.jpg",
         description: "Ты — мое самое ценное сокровище! С Днем рождения, любимая! Пусть каждый твой день будет наполнен любовью, улыбками и счастьем!",
+        riddleDescription: "На фото наш чёрный кот — Коржик. Его имя и было ключом к первому подарку.",
         riddleAnswer: "коржик"
     },
     {
@@ -11,6 +12,7 @@ export const gifts = [
         title: "Второй подарок",
         image: "/images/gift2.jpg",
         description: "Как эти прекрасные цветы раскрываются, так и твоя улыбка освещает мой мир! Ты — самое красивое, что есть во мне.",
+        riddleDescription: "Париж и Триумфальная арка — подсказка к слову «лувр».",
         riddleAnswer: "лувр"
     },
     {
@@ -18,6 +20,7 @@ export const gifts = [
         title: "Третий подарок",
         image: "/images/gift3.jpg",
         description: "Сладость жизни — это ты! Пусть твоя жизнь будет такой же сладкой, как этот торт — полной радости, счастья и волшебства!",
+        riddleDescription: "Термальные ванны Széchenyi — символ Будапешта, ответ «будапешт».",
         riddleAnswer: "будапешт"
     },
     {
@@ -25,6 +28,7 @@ export const gifts = [
         title: "Четвертый подарок",
         image: "/images/gift4.jpg",
         description: "Ты сияешь ярче всех звезд! Спасибо за то, что ты есть — за твою доброту, warmth и любовь, которую ты даришь мне каждый день.",
+        riddleDescription: "Яркая бугенвиллия — отсылка к солнечному Марокко.",
         riddleAnswer: "марокко"
     },
     {
@@ -32,13 +36,21 @@ export const gifts = [
         title: "Пятый подарок",
         image: "/images/gift5.jpg",
         description: "Этот подарок — символ моей безграничной любви. С Днем рождения, любимая! Ты — моя всё!",
+        riddleDescription: "Этот кадр — подсказка к слову «флорента».",
         riddleAnswer: "флорента"
     },
     {
         id: 6,
         title: "P.S.",
-        image: "/images/gift6.jpg",
+        image: "/images/gift6.1.jpg",
+        images: [
+            "/images/gift6.1.jpg",
+            "/images/gift6.2.jpg",
+            "/images/gift6.3.jpg",
+            "/images/gift6.4.jpg"
+        ],
         description: "И самый главный подарок — это я, моя любовь и преданность. Спасибо, что ты! С Днем рождения, любимая!",
-        riddleAnswer: null
+        riddleAnswer: null,
+        riddleDescription: "Этот подарок не требует разгадки — просто с любовью и теплом."
     }
 ];
