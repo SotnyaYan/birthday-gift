@@ -98,7 +98,7 @@ function App() {
     }, [progress.opened]);
 
     // Отправка финального уведомления
-    const allGiftsOpened = progress.currentGift > gifts.length;
+    const allGiftsOpened = progress.currentGift >= gifts.length;
 
     useEffect(() => {
         if (allGiftsOpened && telegramConfiguredRef.current && !finalNotificationSentRef.current) {
@@ -127,7 +127,11 @@ function App() {
     const handleOpenGift = useCallback(() => {
         const gift = gifts.find(g => g.id === progress.currentGift);
         
-        if (gift && gift.riddleAnswer) {
+        if (!gift) {
+            return; // Все подарки открыты
+        }
+
+        if (gift.riddleAnswer) {
             setCurrentGift(gift);
             setShowRiddle(true);
         } else {

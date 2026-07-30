@@ -28,7 +28,7 @@ export const gifts = [
         title: "Четвертый подарок",
         image: "/images/gift4.jpg",
         description: "Не знаю какой тут будет подарок, когда писал текст ещё не придумал его, а ты спросила буду ли я чай, я передумал но Коржик захотел",
-        riddleDescription: "Четвертое места на ЧМ-2022",
+        riddleDescription: "Оттуда пришел злодей в Алладине",
         riddleAnswer: "марокко"
     },
     {
@@ -38,19 +38,17 @@ export const gifts = [
         description: "Этот подарок — не сюрприз, а желание и необходимость",
         riddleDescription: "Сложная загадка. Подсказка: (побеги сибирской пихты)",
         riddleAnswer: "флорента"
-    },
-    {
-        id: 6,
-        title: "P.S.",
-        image: "/images/gift6.1.jpg",
-        images: [
-            "/images/gift6.1.jpg",
-            "/images/gift6.2.jpg",
-            "/images/gift6.3.jpg",
-            "/images/gift6.4.jpg"
-        ],
-        description: "И самый главный подарок — это мы с Коржиком. Спасибо, что ты с нами! С Днем рождения, любимая!",
-        riddleAnswer: null,
-        riddleDescription: "А тут небольшой сюрприз!"
     }
 ];
+
+export const psContent = {
+    title: "P.S.",
+    images: [
+        "/images/gift6.1.jpg",
+        "/images/gift6.2.jpg",
+        "/images/gift6.3.jpg",
+        "/images/gift6.4.jpg"
+    ],
+    description: "И самый главный подарок — это мы с Коржиком. Спасибо, что ты с нами! С Днем рождения, любимая!",
+    hint: "А тут небольшой сюрприз!"
+};
