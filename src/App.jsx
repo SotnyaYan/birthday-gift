@@ -111,11 +111,11 @@ function App() {
 
     // Эффект для автоматического перехода к следующему подарку или P.S.
     useEffect(() => {
-        if (progress.opened && progress.unlockAt && now >= progress.unlockAt) {
+        if (progress.opened && progress.unlockAt) {
             if (progress.currentGift === gifts.length) {
                 // После 5-го подарка показываем P.S. экран
                 setShowPsScreen(true);
-            } else {
+            } else if (now >= progress.unlockAt) {
                 nextGift();
             }
         }
@@ -191,8 +191,8 @@ function App() {
         );
     }
 
-    // Экран P.S. — после всех 5 подарков
-    if (showPsScreen) {
+    // Экран P.S. — после 5-го подарка
+    if (progress.currentGift === gifts.length && progress.opened) {
         return (
             <>
                 <PsScreen onDone={() => setShowPsScreen(false)} />

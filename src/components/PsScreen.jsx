@@ -19,6 +19,7 @@ export default function PsScreen({ onDone }) {
                 <div className="opened-content">
                     <h2>{psContent.title}</h2>
                     <p>{psContent.description}</p>
+                    <p style={{ fontStyle: "italic", color: "var(--accent)" }}>{psContent.hint}</p>
                 </div>
 
                 <button onClick={onDone}>
