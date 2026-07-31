@@ -7,6 +7,7 @@ import RiddleScreen from "./components/RiddleScreen";
 import GiftScreen from "./components/GiftScreen";
 import WaitingScreen from "./components/WaitingScreen";
 import SuccessScreen from "./components/SuccessScreen";
+import PsScreen from "./components/PsScreen";
 import ProgressIndicator from "./components/ProgressIndicator";
 import ResetButton from "./components/ResetButton";
 import ToastNotification from "./components/ToastNotification";
@@ -35,6 +36,7 @@ function App() {
     const [currentGift, setCurrentGift] = useState(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [showPsScreen, setShowPsScreen] = useState(false);
 
     // Ref чтобы не повторять эффекты
     const telegramConfiguredRef = useRef(telegramConfigured);
@@ -98,7 +100,7 @@ function App() {
     }, [progress.opened]);
 
     // Отправка финального уведомления
-    const allGiftsOpened = progress.currentGift >= gifts.length;
+    const allGiftsOpened = progress.currentGift > gifts.length;
 
     useEffect(() => {
         if (allGiftsOpened && telegramConfiguredRef.current && !finalNotificationSentRef.current) {
@@ -107,12 +109,17 @@ function App() {
         }
     }, [allGiftsOpened]);
 
-    // Эффект для автоматического перехода к следующему подарку
+    // Эффект для автоматического перехода к следующему подарку или P.S.
     useEffect(() => {
         if (progress.opened && progress.unlockAt && now >= progress.unlockAt) {
-            nextGift();
+            if (progress.currentGift === gifts.length) {
+                // После 5-го подарка показываем P.S. экран
+                setShowPsScreen(true);
+            } else {
+                nextGift();
+            }
         }
-    }, [progress.opened, progress.unlockAt, now, nextGift]);
+    }, [progress.opened, progress.unlockAt, now, nextGift, progress.currentGift, gifts.length]);
 
     const handleRiddleAnswer = useCallback((correct) => {
         setShowRiddle(false);
@@ -180,6 +187,15 @@ function App() {
                         onClose={handleCloseToast} 
                     />
                 )}
+            </>
+        );
+    }
+
+    // Экран P.S. — после всех 5 подарков
+    if (showPsScreen) {
+        return (
+            <>
+                <PsScreen onDone={() => setShowPsScreen(false)} />
             </>
         );
     }

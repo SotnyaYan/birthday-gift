@@ -1,8 +1,6 @@
 import "../App.css";
-import { psContent } from "../data/gifts";
 
 export default function SuccessScreen({ onReset }) {
-    const isPsGift = true;
 
     return (
         <div className="screen success-screen">
@@ -22,26 +20,6 @@ export default function SuccessScreen({ onReset }) {
                 <p style={{ fontSize: "18px", fontWeight: "600", color: "var(--accent)" }}>
                     С Днем рождения!
                 </p>
-
-                {isPsGift && psContent && (
-                    <div className="ps-gallery">
-                        {psContent.images.map((src, index) => (
-                            <div
-                                key={src}
-                                className={`image-container ps-gallery-item`}
-                            >
-                                <img src={src} alt={`${psContent.title} ${index + 1}`} />
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-                {psContent && (
-                    <div className="opened-content">
-                        <h2>{psContent.title}</h2>
-                        <p>{psContent.description}</p>
-                    </div>
-                )}
 
                 <button onClick={onReset}>
                     Начать заново
