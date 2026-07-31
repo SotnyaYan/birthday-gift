@@ -37,6 +37,7 @@ function App() {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [showPsScreen, setShowPsScreen] = useState(false);
+    const [psDone, setPsDone] = useState(false);
 
     // Ref чтобы не повторять эффекты
     const telegramConfiguredRef = useRef(telegramConfigured);
@@ -192,10 +193,20 @@ function App() {
     }
 
     // Экран P.S. — после 5-го подарка
-    if (progress.currentGift === gifts.length && progress.opened) {
+    if (progress.currentGift === gifts.length && progress.opened && !psDone) {
         return (
             <>
-                <PsScreen onDone={() => setShowPsScreen(false)} />
+                <PsScreen onDone={() => setPsDone(true)} />
+            </>
+        );
+    }
+
+    // Экран P.S. просмотрен — показываем финальный экран
+    if (progress.currentGift === gifts.length && psDone) {
+        return (
+            <>
+                <ProgressIndicator progress={progress} total={gifts.length} />
+                <SuccessScreen onReset={resetProgress} />
             </>
         );
     }
