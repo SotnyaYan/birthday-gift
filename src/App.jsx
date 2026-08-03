@@ -192,25 +192,6 @@ function App() {
         );
     }
 
-    // Экран P.S. — после 5-го подарка
-    if (progress.currentGift === gifts.length && progress.opened && !psDone) {
-        return (
-            <>
-                <PsScreen onDone={() => setPsDone(true)} />
-            </>
-        );
-    }
-
-    // Экран P.S. просмотрен — показываем финальный экран
-    if (progress.currentGift === gifts.length && psDone) {
-        return (
-            <>
-                <ProgressIndicator progress={progress} total={gifts.length} />
-                <SuccessScreen onReset={resetProgress} />
-            </>
-        );
-    }
-
     // Все подарки открыты
     if (allGiftsOpened) {
         return (
@@ -257,6 +238,25 @@ function App() {
     }
 
     const gift = gifts.find(g => g.id === progress.currentGift);
+
+    // 5-й подарок открыт — показываем P.S.
+    if (progress.currentGift === gifts.length && progress.opened && !psDone) {
+        return (
+            <>
+                <PsScreen onDone={() => setPsDone(true)} />
+            </>
+        );
+    }
+
+    // 5-й подарок просмотрен — финальный экран
+    if (progress.currentGift === gifts.length && psDone) {
+        return (
+            <>
+                <ProgressIndicator progress={progress} total={gifts.length} />
+                <SuccessScreen onReset={resetProgress} />
+            </>
+        );
+    }
 
     return (
         <>
