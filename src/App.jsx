@@ -110,17 +110,12 @@ function App() {
         }
     }, [allGiftsOpened]);
 
-    // Эффект для автоматического перехода к следующему подарку или P.S.
+    // Эффект для автоматического перехода к следующему подарку
     useEffect(() => {
-        if (progress.opened && progress.unlockAt) {
-            if (progress.currentGift === gifts.length) {
-                // После 5-го подарка показываем P.S. экран
-                setShowPsScreen(true);
-            } else if (now >= progress.unlockAt) {
-                nextGift();
-            }
+        if (progress.opened && progress.unlockAt && now >= progress.unlockAt) {
+            nextGift();
         }
-    }, [progress.opened, progress.unlockAt, now, nextGift, progress.currentGift, gifts.length]);
+    }, [progress.opened, progress.unlockAt, now, nextGift]);
 
     const handleRiddleAnswer = useCallback((correct) => {
         setShowRiddle(false);
@@ -221,24 +216,6 @@ function App() {
         );
     }
 
-    // Показываем экран ожидания
-    if (progress.opened && progress.unlockAt && now < progress.unlockAt) {
-        return (
-            <>
-                <ProgressIndicator progress={progress} total={gifts.length} />
-                <WaitingScreen unlockAt={progress.unlockAt} now={now} />
-                {showToast && (
-                    <ToastNotification 
-                        message={toastMessage} 
-                        onClose={handleCloseToast} 
-                    />
-                )}
-            </>
-        );
-    }
-
-    const gift = gifts.find(g => g.id === progress.currentGift);
-
     // 5-й подарок открыт — показываем P.S.
     if (progress.currentGift === gifts.length && progress.opened && !psDone) {
         return (
@@ -257,6 +234,24 @@ function App() {
             </>
         );
     }
+
+    // Показываем экран ожидания
+    if (progress.opened && progress.unlockAt && now < progress.unlockAt) {
+        return (
+            <>
+                <ProgressIndicator progress={progress} total={gifts.length} />
+                <WaitingScreen unlockAt={progress.unlockAt} now={now} />
+                {showToast && (
+                    <ToastNotification 
+                        message={toastMessage} 
+                        onClose={handleCloseToast} 
+                    />
+                )}
+            </>
+        );
+    }
+
+    const gift = gifts.find(g => g.id === progress.currentGift);
 
     return (
         <>
