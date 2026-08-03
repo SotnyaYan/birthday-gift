@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Welcome from "./components/Welcome";
 import RiddleScreen from "./components/RiddleScreen";
 import GiftScreen from "./components/GiftScreen";
+import FirstGift from "./components/FirstGift";
 import WaitingScreen from "./components/WaitingScreen";
 import SuccessScreen from "./components/SuccessScreen";
 import PsScreen from "./components/PsScreen";
@@ -36,6 +37,7 @@ function App() {
     const [currentGift, setCurrentGift] = useState(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [showFirstGift, setShowFirstGift] = useState(false);
     const [psDone, setPsDone] = useState(false);
 
     // Ref чтобы не повторять эффекты
@@ -118,13 +120,27 @@ function App() {
 
     const handleRiddleAnswer = useCallback((correct) => {
         setShowRiddle(false);
-        openGift();
-    }, [openGift]);
+        // После первого подарка показываем FirstGift
+        if (progress.currentGift === 1) {
+            setShowFirstGift(true);
+        } else {
+            openGift();
+        }
+    }, [openGift, progress.currentGift]);
 
     const handleSkipRiddle = useCallback(() => {
         setShowRiddle(false);
         openGift();
     }, [openGift]);
+
+    const handleFirstGiftNext = useCallback(() => {
+        setShowFirstGift(false);
+        // Отмечаем первый подарок как открытый
+        const gift = gifts.find(g => g.id === 1);
+        sendTelegramNotification(formatGiftNotification(gift)).then(() => {});
+        // Переходим к следующему подарку
+        nextGift();
+    }, [nextGift]);
 
     const handleOpenGift = useCallback(() => {
         const gift = gifts.find(g => g.id === progress.currentGift);
@@ -199,6 +215,16 @@ function App() {
                         onClose={handleCloseToast} 
                     />
                 )}
+            </>
+        );
+    }
+
+    // Экран первого подарка (после угадывания)
+    if (showFirstGift) {
+        return (
+            <>
+                <ProgressIndicator progress={progress} total={gifts.length} />
+                <FirstGift onNext={handleFirstGiftNext} />
             </>
         );
     }
