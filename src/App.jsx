@@ -137,7 +137,8 @@ function App() {
             setCurrentGift(gift);
             setShowRiddle(true);
         } else {
-            openGift();
+            // Для 5-го подарка без таймера
+            openGift(progress.currentGift === gifts.length);
         }
     }, [progress.currentGift, openGift]);
 
@@ -240,6 +241,28 @@ function App() {
             <>
                 <ProgressIndicator progress={progress} total={gifts.length} />
                 <WaitingScreen unlockAt={progress.unlockAt} now={now} />
+                {showToast && (
+                    <ToastNotification 
+                        message={toastMessage} 
+                        onClose={handleCloseToast} 
+                    />
+                )}
+            </>
+        );
+    }
+
+    // 5-й подарок
+    if (progress.currentGift === gifts.length && !progress.opened) {
+        const gift = gifts.find(g => g.id === progress.currentGift);
+        return (
+            <>
+                <ProgressIndicator progress={progress} total={gifts.length} />
+                <GiftScreen
+                    gift={gift}
+                    opened={progress.opened}
+                    onOpen={handleOpenGift}
+                />
+                <ResetButton onReset={resetProgress} />
                 {showToast && (
                     <ToastNotification 
                         message={toastMessage} 

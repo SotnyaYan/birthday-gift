@@ -22,11 +22,11 @@ export default function useProgress() {
         save(newProgress);
     }
 
-    function openGift() {
+    function openGift(skipTimer = false) {
         const newProgress = {
             ...progress,
             opened: true,
-            unlockAt: nextUnlock()
+            unlockAt: skipTimer ? null : nextUnlock()
         };
         save(newProgress);
     }
