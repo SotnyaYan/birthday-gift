@@ -135,12 +135,8 @@ function App() {
 
     const handleFirstGiftNext = useCallback(() => {
         setShowFirstGift(false);
-        // Отмечаем первый подарок как открытый
-        const gift = gifts.find(g => g.id === 1);
-        sendTelegramNotification(formatGiftNotification(gift)).then(() => {});
-        // Переходим к следующему подарку
-        nextGift();
-    }, [nextGift]);
+        openGift();
+    }, [openGift]);
 
     const handleOpenGift = useCallback(() => {
         const gift = gifts.find(g => g.id === progress.currentGift);
