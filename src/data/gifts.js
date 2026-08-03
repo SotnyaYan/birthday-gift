@@ -45,9 +45,7 @@ export const psContent = {
     title: "P.S.",
     images: [
         "/images/gift6.1.jpg",
-        "/images/gift6.2.jpg",
-        "/images/gift6.3.jpg",
-        "/images/gift6.4.jpg"
+        "/images/gift6.2.jpg"
     ],
     description: "И самый главный гостинец — это мы с Коржиком. Спасибо, что ты с нами! С Днем рождения, любимая!",
     hint: "А тут небольшой сюрприз!"
