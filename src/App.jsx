@@ -36,7 +36,6 @@ function App() {
     const [currentGift, setCurrentGift] = useState(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
-    const [showPsScreen, setShowPsScreen] = useState(false);
     const [psDone, setPsDone] = useState(false);
 
     // Ref чтобы не повторять эффекты
@@ -112,10 +111,10 @@ function App() {
 
     // Эффект для автоматического перехода к следующему подарку
     useEffect(() => {
-        if (progress.opened && progress.unlockAt && now >= progress.unlockAt) {
+        if (progress.opened && progress.unlockAt && now >= progress.unlockAt && progress.currentGift < gifts.length) {
             nextGift();
         }
-    }, [progress.opened, progress.unlockAt, now, nextGift]);
+    }, [progress.opened, progress.unlockAt, now, nextGift, progress.currentGift, gifts.length]);
 
     const handleRiddleAnswer = useCallback((correct) => {
         setShowRiddle(false);
@@ -235,8 +234,8 @@ function App() {
         );
     }
 
-    // Показываем экран ожидания
-    if (progress.opened && progress.unlockAt && now < progress.unlockAt) {
+    // Показываем экран ожидания (кроме 5-го подарка)
+    if (progress.opened && progress.unlockAt && now < progress.unlockAt && progress.currentGift < gifts.length) {
         return (
             <>
                 <ProgressIndicator progress={progress} total={gifts.length} />
