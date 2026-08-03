@@ -18,7 +18,7 @@ export default function WaitingScreen({ unlockAt, now }) {
             <div className="screen ready">
                 <div className="glass">
                     <h2>Готово!</h2>
-                    <p>Следующий подарок уже ждет тебя!</p>
+                    <p>Следующий гостинец уже ждет тебя!</p>
                 </div>
             </div>
         );

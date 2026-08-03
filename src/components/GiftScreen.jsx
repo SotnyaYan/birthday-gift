@@ -36,7 +36,7 @@ export default function GiftScreen({ gift, opened, onOpen }) {
                     </div>
                 ) : (
                     <button onClick={onOpen} className="open-btn">
-                        Открыть подарок
+                        Открыть гостинец
                     </button>
                 )}
             </div>

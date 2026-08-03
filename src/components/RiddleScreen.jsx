@@ -38,7 +38,7 @@ export default function RiddleScreen({ gift, onAnswer }) {
                 </div>
                 <h2>{gift.title}</h2>
                 <p style={{ marginBottom: "20px", fontSize: "15px" }}>
-                    Введи слово, чтобы открыть подарок:
+                    Введи слово, чтобы открыть гостинец:
                 </p>
 
                 <div className="riddle-image">

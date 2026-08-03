@@ -27,19 +27,19 @@ export async function sendTelegramNotification(message) {
 
 // Формирование сообщения для уведомления
 export function formatGiftNotification(gift) {
-    return `🎉 <b>Подарок открыт!</b>
+    return `🎉 <b>гостинец открыт!</b>
 
 🎁 ${gift.title}
 
 <a href="${window.location.origin}${gift.image}">📷</a>
 
-<a href="${window.location.href}">Открыть подарок</a>`;
+<a href="${window.location.href}">Открыть гостинец</a>`;
 }
 
 export function formatWelcomeNotification() {
     return `❤️ <b>Начало прохождения!</b>
 
-Теперь ты можешь открыть первый подарок!
+Теперь ты можешь открыть первый гостинец!
 
 <a href="${window.location.href}">Перейти к приложению</a>`;
 }

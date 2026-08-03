@@ -27,7 +27,7 @@ export default function Timer({finishTime}) {
   if(time <=0){
     return (
       <div className="ready">
-        🎁 Подарок готов!
+        🎁 гостинец готов!
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function Timer({finishTime}) {
   return (
     <div className="timer">
 
-      Следующий подарок через:
+      Следующий гостинец через:
 
       <br/>
 

@@ -722,7 +722,7 @@ button.submit-btn:not(:disabled) {
     transform: scale(1.05);
 }
 
-/* Открытый подарок */
+/* Открытый гостинец */
 .opened-content {
     animation: slideIn 0.5s ease;
 }

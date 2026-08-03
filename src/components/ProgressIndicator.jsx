@@ -10,7 +10,7 @@ export default function ProgressIndicator({ progress, total }) {
         <div className="progress-container">
             <div className="progress-bar">
                 <span className="progress-text">
-                    Подарок {current} из {total}
+                    гостинец {current} из {total}
                 </span>
                 <div className="progress-dots">
                     {Array.from({ length: total }, (_, i) => {

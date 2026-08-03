@@ -88,7 +88,7 @@ function App() {
         }
 
         if (progress.opened && telegramConfiguredRef.current && !notificationSentRef.current) {
-            setToastMessage("Подарок открыт! Можно забрать!");
+            setToastMessage("гостинец открыт! Можно забрать!");
             setShowToast(true);
             
             const gift = gifts.find(g => g.id === progress.currentGift);
